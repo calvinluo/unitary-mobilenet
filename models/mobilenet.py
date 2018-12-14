@@ -36,7 +36,9 @@ class Block(nn.Module):
             rotated = torch.cat([rotated, rotated_1], dim=1)
             # Concatenating with residual block approach
             # rotated = torch.cat([rotated, out], dim=1)
-        out = F.relu(self.bn2(rotated))
+        out = rotated
+        # Performing bn and relu on rotated matrix hinders performance, as it is redundant with previous bn + relu transformation
+        # out = F.relu(self.bn2(rotated))
         return out
 
     def loop(self, x, v1, v2):
